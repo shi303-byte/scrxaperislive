@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Scrxaper</title>
+  <link rel="icon" href="/favicon.png">
+  <link rel="manifest" href="/manifest.webmanifest">
+  <meta name="theme-color" content="#0b0d10">
+  <link rel="apple-touch-icon" href="/icon-192.png">
+  <link rel="stylesheet" href="/app.css">
+</head>
+<body>
+  <main id="auth" hidden>
+    <header class="hero"><img src="/brand/hero-glass.png" alt="Scrxaper. Connect freely. Belong anywhere." width="1254" height="423" fetchpriority="high"></header>
+    <section class="auth-card" aria-labelledby="auth-title">
+      <h1 id="auth-title" class="sr-only">Scrxaper</h1>
+      <form id="auth-form" novalidate>
+        <label>Username <input name="username" autocomplete="username" required minlength="3" maxlength="24"></label>
+        <label id="display-field" hidden>Display name <input name="displayName" maxlength="40" autocomplete="nickname"></label>
+        <label>Password <input name="password" type="password" autocomplete="current-password" required minlength="8"></label>
+        <p id="auth-error" class="error" role="alert"></p>
+        <button class="primary" type="submit">Log in</button>
+      </form>
+      <button id="auth-toggle" class="link" type="button">New here? Create an account</button>
+    </section>
+    <ul class="points" aria-label="What is in Scrxaper">
+      <li>Chat</li><li>Communities</li><li>Calls</li><li>Buddy</li><li>Studio</li>
+    </ul>
+    <p class="fine">Messages are not end-to-end encrypted.</p>
+  </main>
+
+  <div id="app" hidden>
+    <nav class="rail" aria-label="Primary">
+      <img src="/logo.png" alt="Scrxaper" width="36" height="36">
+      <div class="rail-tools">
+        <button id="open-discover" class="link" type="button">Discover</button>
+        <button id="open-buddy" class="link" type="button">Buddy</button>
+        <button id="open-studio" class="link" type="button">Studio</button>
+        <button id="open-me" class="link" type="button">Me</button>
+        <button id="open-bots" class="link" type="button">Bots</button>
+        <button id="open-owner" class="link" type="button" hidden>Owner</button>
+        <button id="logout" class="link" type="button">Log out</button>
+      </div>
+    </nav>
+    <aside class="list" aria-label="Conversations">
+      <header>
+        <div class="me-row"><span id="me-pfp"></span><strong id="me"></strong></div>
+        <form id="search"><input name="q" placeholder="Search messages and people" aria-label="Search" autocomplete="off" minlength="2"></form>
+        <form id="new-chat"><input name="to" placeholder="Message a username" aria-label="Start a conversation by username" autocomplete="off"></form>
+      </header>
+      
+      
+      
+      <details class="create"><summary>New group, community or invite code</summary>
+        <form id="new-group"><input name="name" placeholder="New group name" aria-label="Create a group" autocomplete="off"></form>
+        <form id="join"><input name="code" placeholder="Join with an invite code" aria-label="Join a group or community with an invite code" autocomplete="off"></form>
+        <form id="new-community"><input name="name" placeholder="New community name" aria-label="Create a community" autocomplete="off"></form>
+      </details>
+      <ul id="communities"></ul>
+      <ul id="groups"></ul>
+      <ul id="conversations"></ul>
+      <p id="list-empty" class="empty" hidden>No conversations yet. Enter a username above to say hello.</p>
+    </aside>
+    <section class="thread" aria-label="Conversation">
+      <header>
+        <button id="back" class="link" type="button" aria-label="Back to conversations">‹</button>
+        <span id="peer-pfp"></span><strong id="peer-name">Select a conversation</strong>
+        <button id="call-audio" class="link" type="button" hidden>Call</button>
+        <button id="call-video" class="link" type="button" hidden>Video</button>
+        <button id="ginfo" class="link" type="button" hidden>Info</button>
+        <button id="add" class="link" type="button" hidden>Add</button>
+        <button id="invite" class="link" type="button" hidden>Invite</button>
+        <button id="leave" class="link" type="button" hidden>Leave</button>
+        <button id="tone" class="link" type="button" hidden>Sound</button>
+        <button id="mute" class="link" type="button" hidden>Mute</button>
+        <button id="block" class="link" type="button" hidden></button>
+      </header>
+      <div id="messages" role="log" aria-live="polite"></div>
+      <div id="idle" class="idle"><img src="/brand/butterfly.png" alt="" width="150" height="160"><p>Pick a conversation, or search for someone to say hello.</p></div>
+      <form id="composer" hidden>
+        <button id="attach" class="link" type="button" aria-label="Attach an image">Attach</button>
+        <input id="attach-file" type="file" accept="image/png,image/jpeg,image/gif,image/webp" hidden>
+        <span id="attach-note" class="attach-note" hidden></span>
+        <input name="body" placeholder="Type a message" aria-label="Message" autocomplete="off" maxlength="4000">
+        <button class="primary" type="submit">Send</button>
+      </form>
+      <p id="thread-error" class="error" role="alert"></p>
+    </section>
+  </div>
+  <div id="call" class="call" hidden role="dialog" aria-label="Call">
+    <div class="call-stage"><video id="remote-video" autoplay playsinline></video><video id="local-video" autoplay playsinline muted></video></div>
+    <div class="call-info"><span id="call-pfp"></span><strong id="call-name"></strong><span id="call-status"></span></div>
+    <div class="call-controls">
+      <button id="call-accept" class="primary" type="button" hidden>Accept</button>
+      <button id="call-mic" type="button">Mute</button>
+      <button id="call-cam" type="button">Camera off</button>
+      <button id="call-share" type="button">Share screen</button>
+      <button id="call-end" class="danger" type="button">End</button>
+    </div>
+  </div>
+  <dialog id="panel" aria-label="Panel"><div id="panel-body"></div><button id="panel-close" class="link" type="button">Close</button></dialog>
+  <script src="/app.js" type="module"></script>
+</body>
+</html>

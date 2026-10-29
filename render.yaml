@@ -1,0 +1,25 @@
+services:
+  - type: web
+    name: scrxaper
+    runtime: docker
+    plan: starter
+    healthCheckPath: /healthz
+    disk:
+      name: scrxaper-data
+      mountPath: /var/data
+      sizeGB: 1
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: DB_PATH
+        value: /var/data/scrxaper.db
+      - key: UPLOAD_DIR
+        value: /var/data/uploads
+      - key: TRUST_PROXY_HOPS
+        value: "1"
+      - key: OWNER_USERNAME
+        sync: false
+      - key: OWNER_PASSWORD
+        sync: false
+      - key: AI_KEY_SECRET
+        generateValue: true
